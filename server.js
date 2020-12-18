@@ -1,5 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const initRoutes = require("./app/routes/web");
+
+global.__basedir = __dirname;
 
 const app = express();
 
@@ -10,14 +13,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // simple route
-app.get("/", (req, res) => {
-    res.json({ message: "Welcome to bezkoder application." });
-});
+// app.get("/", (req, res) => {
+//     res.json({ message: "Welcome to bezkoder application." });
+// });
 
-require("./app/routes/customer.routes.js")(app);
+app.use(express.urlencoded({ extended: true }));
+initRoutes(app);
+
 
 const db = require("./app/models");
 db.sequelize.sync();
+
+require("./app/routes/customer.routes.js")(app);
 
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
@@ -49,5 +56,5 @@ require('./app/routes/user.routes')(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-    console.log("Server is running on port 8080.");
+    console.log(`Server is running on port ${PORT}.`);
 });
