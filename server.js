@@ -1,10 +1,17 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const initRoutes = require("./app/routes/web");
+const cors = require("cors");
 
 global.__basedir = __dirname;
 
+var corsOptions = {
+    origin: "http://localhost:8081"
+};
+
 const app = express();
+
+app.use(cors(corsOptions));
 
 // parse requests of content-type: application/json
 app.use(bodyParser.json());
