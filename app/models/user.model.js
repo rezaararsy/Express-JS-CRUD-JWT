@@ -8,12 +8,6 @@ module.exports = (sequelize, Sequelize) => {
         },
         password: {
             type: Sequelize.STRING
-        },
-        nik: {
-            type: Sequelize.STRING
-        },
-        no_hp: {
-            type: Sequelize.STRING
         }
     });
 
